@@ -26,11 +26,86 @@ En las simulaciones Delphes puede permitirse el caso en el que en un evento hay 
 
 Las variables posibles a calcularse usando este módulo son: 
 
-- DER_INV_m: Reconstrucción de la masa invariante de una partícula que decae a otras dos. 
+- DER_INV_m: Reconstrucción de la masa invariante de una partícula que decae a otras dos. Se calcula con la función inv_m:
 
 ```
 def inv_m(file, p1, p2, charge = 0, flavor1 = 0, flavor2 = 0, save_df = False, graph = False, mass = 0)
 ```
+- Variables de la función:
+    - File. Archivo .ROOT con el que se trabajará.
+    - p1, p2. Partícula 1 y 2 de la que se reconstuirá la masa invariante.
+    - charge. Carga teórica de la partícula reconstruida.
+    - flavor1. Flavor del primer jet. Configurado por defecto como 0 para que si p1 no es un jet, no se considere entonces su flavor.
+    - flavor2. Flavor del segundo jet. Configurado por defecto como 0 para que si p2 no es un jet, no se considere entonces su flavor.
+    - save_df. Opción de guardar el DataFrame creado como un archivo .csv.
+    - graph = Para graficar la distribución de la masa invariante calculada en los eventos.
+    - mass. Para añadir una línea de referencia que indique un punto de la gráfica de la distribución de la masa invariante reconstruida por evento. 
+
+En esta función, además, se calculan las variables:
+
+- PRI_pt_1 y PRI_pt_2. Momentos transversos de la partícula 1 y 2.
+- PRI_eta_1 y PRI_eta_2. Pseudorapidez de las partículas 1 y 2. 
+- PRI_phi_1 y PRI_phi_2. Ángulos $\phi$ de las partículas 1 y 2. 
+
+Las demás variables siguen una arquitectura similar:
+
+- DER_pseudorapidity_separation. Valor absoluto de la separación de la pseudorapidez entre dos partículas A y B:
+
+$$
+|(\eta_A - \eta_b)|
+$$
+
+```
+def pseudorapidity_separation(file, p1, p2, flavor1 = 0, flavor2 = 0, charge = 0, save_df = False)
+```
+
+- DER_trans_m. Masa transversa entre un par de partículas. 
+
+$$
+m_{\mathrm{tr}}(a, b) = \sqrt{\left( \sqrt{a_x^2 + a_y^2} + \sqrt{b_x^2 + b_y^2} \right)^2 - (a_x + b_x)^2 - (a_y + b_y)^2}
+$$
+
+```
+def trans_m(file, p1, p2, charge = 0, flavor1 = 0, flavor2 = 0, save_df = False, graph = False, mass = 0)
+```
+
+- PRI_pt. Momento transverso, $p_t$ de una partícula:
+
+$$
+p_t = \sqrt{p_x^2 + p_y^2}
+$$
+
+```
+def trans_momentum(file, p1, p2, charge, flavor1 = 0, flavor2 = 0, save_df = True)
+```
+
+- PRI_jet_leading[...] y PRI_jet_subleading[...]. $P_t$, $\eta$ y $\phi$ del jet con mayor momento transverso y $P_t$, $\eta$ y $\phi$ del segundo jet con mayor momento transverso de cada evento.
+
+```
+def leading_n_subleading_jets(file)
+```
+
+- PRI_met y PRI_met_phi. Energía perdida transversa y su ángulo $\phi$. Se calculan con la función met():
+
+```
+def met(file)
+```
+
+- PRI_jet_all_pt. Número de jets totales en el evento. 
+```
+def PRI_jet_all_pt(file)
+```
+- DER_prodeta_jet_jet. Producto de las pseudorapidez entre dos jets. Sólo considérese cuando la masa invariante reconstruida implique dos jets.
+```
+def DER_prodeta_jet_jet(file, flavor1, flavor2, charge = 0, save_df = False)
+```
+- DER_deltaeta_jet_jet. Valor absoluto de la separación de la pseudorapidez entre dos jets. Se considera únicamente cuando la masa invariante reconstruida implique dos jets.
+```
+def DER_deltaeta_jet_jet(file, j1, j2, flavor1, flavor2, charge = 0, save_df = False)
+```
+
+## DataSet Creator
+
 
 [^1]: El programa está configurado actualmente para trabajar únicamente con partículas masivas. La implementación para fotones sigue en curso.
 
