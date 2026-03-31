@@ -229,7 +229,7 @@ En [SINBA-example](https://github.com/emmdaz/SINBA-example.git) se muestra un ej
 
 El ejemplo hace uso de dos archivos .ROOT derivados de una simulación Delphes de colisiones de un protón y un antiprotón. El proceso genera un bosón Z y un bosón H (Higgs) que decaen a un par leptónico y un quark b/anti-b y s/anti-s. Al usar el progrma SINBA fue configurado para reconstruir la masa invariante del bosón de Higgs (a partir de sus decaimientos) y la masa invariante entre los pares leptónicos corresponde a los del bosón Z, por ello, la columna `DER_mass_lep` no fue removida. Fue entonces creada una base de datos como la siguiente:
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 El programa para crear los conjuntos de entrenamiento, validación y prueba fue configurado para generar estos tres conjuntos sin considerar balanceo de clase y dividiendo los datos en 50% entrenamiento, 30% validación y 20% prueba; teniendo pues un número de datos:
 
@@ -255,19 +255,19 @@ Para los datos de prueba.
 
 Las gráficas de pérdida durante el entrenamiento y la validación fueron las siguientes:
 
-![alt text](image-1.png)
+![Alt text](images/image-1.png)
 
 Las gráficas de exactitud durante el entrenamiento y la validación fueron las siguientes:
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 Las gráficas de precisión durante el entrenamiento y la validación fueron las siguientes:
 
-![alt text](image-3.png)
+![alt text](images/image-3.png)
 
 Reportándose una matriz de confusión para los datos de validación como sigue:
 
-![alt text](image-4.png)
+![alt text](images/image-4.png)
 
 ## Consideraciones importantes
 
