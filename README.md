@@ -1,4 +1,8 @@
 # _SINBA ResNet_: User Guide
+Cruz, D. Emmanuel $^{\dagger *}$
+
+</small>$^\dagger$ Facultad de Ciencias Físico Matemáticas, Benemérita Universidad Autónoma de Puebla.</small>  
+</small>$^*$ emmanuel.cruzd@alumno.buap.mx</small>
 
 ### Abstract 
 
@@ -26,20 +30,20 @@ En las simulaciones Delphes puede permitirse el caso en el que en un evento hay 
 
 Las variables posibles a calcularse usando este módulo son: 
 
-- DER_INV_m: Reconstrucción de la masa invariante de una partícula que decae a otras dos. Se calcula con la función inv_m:
+- DER_INV_m: Reconstrucción de la masa invariante de una partícula que decae a otras dos. Se calcula con la función `inv_m`:
 
 ```
 def inv_m(file, p1, p2, charge = 0, flavor1 = 0, flavor2 = 0, save_df = False, graph = False, mass = 0)
 ```
 - Variables de la función:
-    - File. Archivo .ROOT con el que se trabajará.
-    - p1, p2. Partícula 1 y 2 de la que se reconstuirá la masa invariante.
-    - charge. Carga teórica de la partícula reconstruida.
-    - flavor1. Flavor del primer jet. Configurado por defecto como 0 para que si p1 no es un jet, no se considere entonces su flavor.
-    - flavor2. Flavor del segundo jet. Configurado por defecto como 0 para que si p2 no es un jet, no se considere entonces su flavor.
-    - save_df. Opción de guardar el DataFrame creado como un archivo .csv.
-    - graph = Para graficar la distribución de la masa invariante calculada en los eventos.
-    - mass. Para añadir una línea de referencia que indique un punto de la gráfica de la distribución de la masa invariante reconstruida por evento. 
+    - `File`. Archivo .ROOT con el que se trabajará.
+    - `p1`, `p2`. Partícula 1 y 2 de la que se reconstuirá la masa invariante.
+    - `charge`. Carga teórica de la partícula reconstruida.
+    - `flavor1`. Flavor del primer jet. Configurado por defecto como 0 para que si `p1` no es un jet, no se considere entonces su flavor.
+    - `flavor2`. Flavor del segundo jet. Configurado por defecto como 0 para que si `p2` no es un jet, no se considere entonces su flavor.
+    - `save_df`. Opción de guardar el DataFrame creado como un archivo .csv.
+    - `graph = False`. Para graficar la distribución de la masa invariante calculada en los eventos. Por defecto no se realiza.
+    - `mass`. Para añadir una línea de referencia que indique un punto de la gráfica de la distribución de la masa invariante reconstruida por evento. Por defecto si `mass = 0` no se realiza el graficado.
 
 En esta función, además, se calculan las variables:
 
@@ -85,7 +89,7 @@ def trans_momentum(file, p1, p2, charge, flavor1 = 0, flavor2 = 0, save_df = Tru
 def leading_n_subleading_jets(file)
 ```
 
-- PRI_met y PRI_met_phi. Energía perdida transversa y su ángulo $\phi$. Se calculan con la función met():
+- PRI_met y PRI_met_phi. Energía perdida transversa y su ángulo $\phi$. Se calculan con la función `met()`:
 
 ```
 def met(file)
@@ -104,9 +108,85 @@ def DER_prodeta_jet_jet(file, flavor1, flavor2, charge = 0, save_df = False)
 def DER_deltaeta_jet_jet(file, j1, j2, flavor1, flavor2, charge = 0, save_df = False)
 ```
 
+[^1]: El programa está configurado actualmente para trabajar únicamente con partículas masivas. La implementación para fotones sigue en curso.
+
 ## DataSet Creator
 
+El módulo data_set_creator permite la creación y el guardado de bases de datos para los eventos señal y ruido respectivamente. Así mismo, da posibilidad de crear directamente los conjuntos de entrenamiento, validación y prueba con los que se puede entrenar un modelo de red neuronal (o cualquier otro método de aprendizaje de máquina deseado que lo permita). En este programa también ha sido definida una función que permite observar la matriz de correlación entre las variables que conforman a un conjunto de datos creado con la función dataset() de este programa. 
 
-[^1]: El programa está configurado actualmente para trabajar únicamente con partículas masivas. La implementación para fotones sigue en curso.
+- `dataset()`. La función crea un DataFrame usando las variables definidas en variables_calculator. 
+
+```
+def dataset(file, p1, p2, flavor1 = 0, flavor2 = 0, charge = 0, Signal = False, Noise = False, save_csv = False)
+```
+Sus variables son: 
+
+- `File`. Ruta del archivo .ROOT ha trabajar.
+- `p1` y `p2`. Partículas 1 y dos con las que se reconstruirá la masa invariante.
+- `lavor 1` y `flavor2`. Flavor del jet correspondiente a p1 y flavor del jet correspondiente a p2 por si es recorrido. Por defecto se les asigna el valor de 0 indicando que no se trabaja con jets pero el usuario puede hacerlo. 
+- `charge`. Carga teórica de la partícula a la que se le reconstruye su masa invariante. 
+- `Signal = False`, `Noise = False`. Cambiese el valor de `Signal` o `Noise` a `True` para asignar una etiqueta 1 en caso de que sean eventos señal o etiqueta 0 si son eventos ruido. No pueden ser ambas True al mismo tiempo. 
+- `save_csv`. Para guardar el DataFrame como un .csv.
+
+El DataFrame obtenido tiene como columnas:
+- PRI_jet_all_pt
+- PRI_jet_num
+- PRI_jet_leading_pt
+- PRI_jet_subleading_pt
+- PRI_jet_leading_eta
+- PRI_jet_subleading_eta
+- PRI_jet_leading_phi
+- PRI_jet_subleading_phi
+- PRI_met
+- PRI_met_phi
+- Der_prodeta_jet_jet
+- DER_deltaeta_jet_jet
+- PRI_pt_1
+- PRI_pt_2
+- PRI_eta_1
+- PRI_eta_2
+- PRI_phi_1
+- PRI_phi_2
+- DER_INV_m
+- label
+- DER_mass_lep. Masa invariante de los pares leptónicos de cada evento.
+
+Cada una de estas variables conforme a lo que se explicó en la sección anterior. 
+
+- `model_sets()`. Este programa crea los conjuntos que se utilizarán para entrenar un modelo clasificador de red neuronal artificial (RNA) de señal y ruido.
+
+    Por defecto, no se considera un subconjunto de prueba. Puede configurarlo para crearlo estableciendo `test = True`.
+
+    El porcentaje para cada subconjunto está configurado por defecto de la siguiente manera:
+
+    - 50 % de datos de entrenamiento
+
+    - 50 % de datos de validación
+
+    - 0 % de datos de prueba (ya que no se consideran)
+
+    El usuario puede modificar estos valores.
+
+    `signal_df` y `noise_df` corresponden a DataFrames de Pandas que el usuario debe crear utilizando la función `dataset()` de este programa.
+
+    El valor de `esc` se utiliza para aumentar el tamaño del conjunto de señal, ya se ha observado que los conjuntos de ruido en ocasiones pueden ser muy pequeños y los modelos RNA ResNet pueden tener problemas para clasificar.
+
+    Por defecto, `esc = 1`, pero el usuario puede modificarlo.
+
+```
+def model_sets(signal_df, noise_df, test = False, weight_classes = False, train_per = 0.5, val_per = 0.5, test_per = 0., esc = 1., random_state = 45)
+```
+
+La opción `weight_classes` es asignada en el caso que haya desbalanceo en los conjuntos señal y ruido. Hace una proporción que permite darle más importancia durante el entrenamiento al conjunto que tenga menor número de datos. 
+
+- `corr()`. Función para ver la matriz de correlación entre las variables de un conjunto de datos creado en este programa. 
+```
+def corr(df, cmap = "coolwarm", method = "pearson", fig_size = (20,20), droplabel = True)
+```
+- `df`. DataFrame a analizar.
+- `method`. Método a utilizar para analizar la correlación entre las variables.
+- `droplabel = True`. Por defecto elimina la columna con la etiquita 0/1 del conjunto de datos.
+
+## Bibliografía
 
 [1]: Balazs Kegl, CecileGermain, ChallengeAdmin, ClaireAdam, David Rousseau, Djabbz, fradav, Glen Cowan, Isabelle, and joycenv. Higgs Boson Machine Learning Challenge. https://kaggle.com/competitions/higgs-boson, 2014. Kaggle.
