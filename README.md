@@ -1,4 +1,4 @@
-# _SINBA ResNet [^1]_: User Guide
+# _SINBA ResNet_: User Guide
 Cruz, D. Emmanuel $^{\dagger *}$
 
 </small>$^\dagger$ Facultad de Ciencias Físico Matemáticas, Benemérita Universidad Autónoma de Puebla.</small>  
@@ -10,7 +10,7 @@ La clasificación de señal y ruido de eventos de altas energías implica hasta 
 
 ## Introducción
 
-El programa SINBA tiene como principal objeto facilitar el diseño de una red neuronal tipo ResNet para realizar la diferenciación de eventos señal y eventos ruido de colisiones de partículas. Su diseño está enfocado a trabajar con archivos .ROOT derivados de simulaciones Delphes. 
+El programa SINBA[^1] tiene como principal objeto facilitar el diseño de una red neuronal tipo ResNet para realizar la diferenciación de eventos señal y eventos ruido de colisiones de partículas. Su diseño está enfocado a trabajar con archivos .ROOT derivados de simulaciones Delphes. 
 
 El programa requiere la instalación de la paquetería Uproot, la cual es una alternativa para la paquetería PyRoot, y permite trabajar archivos .ROOT con librerías más familiares como Numpy y Pandas. La documentación completa de la paquetería Uproot puede encontrarse en [Uproot Library](https://uproot.readthedocs.io/en/stable/index.html).
 
