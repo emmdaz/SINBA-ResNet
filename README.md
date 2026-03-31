@@ -287,6 +287,15 @@ Reportándose una matriz de confusión para los datos de validación como sigue:
 
 ![alt text](images/image-4.png)
 
+En la implementación de SINBA se utilizó una laptop ASUSTeK COMPUTER INC. ASUS TUF Gaming F15 FX506LHB_FX506LHB con Ubuntu Ubuntu 24.04.4 LTS de 64 bits con un procesador Intel® Core™ i5-10300H × 8 con 16 GB de RAM y usando una tarjeta gráfica NVIDIA GeForce GTX 1650 en la imagen de docker para Jupyter con Tensorflow 2.15.0-gpu. 
+
+Esta configuración de equipo reporta los siguientes tiempos para cada proceso: 
+- Importar `SINBA`: Wall time: 7.8 s.
+- Crear DataFrames de eventos señal y ruido con `SINBA.dataset_creator.dataset()` guardando para cada uno un archivo .csv: Wall time: 45.8 s.
+- Crear conjuntos de entrenamiento, validación y prueba para el modelo usando `SINBA.dataset_creator.model_sets()` sin considerar balanceo de clase: Wall time: 17.8 ms.
+- Optimización con Optuna (20 intentos) usando `SINBA.objective()`: Wall time: 12min 40s.
+
+
 ## Consideraciones importantes
 
 SINBA fue desarrollado para implementarse usando el contenedor de docker `tensorflow-2.15.0-gpu`. Es sugerido enormemente sea implementado de la misma forma (pues así fue cómo fue hecho). 
