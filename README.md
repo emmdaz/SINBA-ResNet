@@ -24,6 +24,14 @@ Las variables usadas para el entrenamiento se dividen esencialmente en dos tipos
 
 En las simulaciones Delphes puede permitirse el caso en el que en un evento hay más de una partícula de un tipo, e.g. que haya tres electrones, y en todo caso la elección de la variable será acorde a la correspondiente de la partícula que tenga el mayor valor de momento transverso[^1]. 
 
+Las variables posibles a calcularse usando este módulo son: 
+
+- DER_INV_m: Reconstrucción de la masa invariante de una partícula que decae a otras dos. 
+
+```
+def inv_m(file, p1, p2, charge = 0, flavor1 = 0, flavor2 = 0, save_df = False, graph = False, mass = 0)
+```
+
 [^1]: El programa está configurado actualmente para trabajar únicamente con partículas masivas. La implementación para fotones sigue en curso.
 
 [1]: Balazs Kegl, CecileGermain, ChallengeAdmin, ClaireAdam, David Rousseau, Djabbz, fradav, Glen Cowan, Isabelle, and joycenv. Higgs Boson Machine Learning Challenge. https://kaggle.com/competitions/higgs-boson, 2014. Kaggle.
