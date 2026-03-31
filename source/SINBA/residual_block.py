@@ -1,3 +1,4 @@
+# Residual Block
 from tensorflow.keras import regularizers, layers
 
 def residual_block(x, perceptrons, activation, dropout_rate = 0.0, reg_value = 1.0e-3, regularizer = "l2"):
