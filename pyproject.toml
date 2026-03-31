@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "SINBA"
+version = "0.0.1"
+authors = [
+  { name="Emmanuel Cruz Díaz", email="emmanuel.cruzdælumno.buap.mx" },
+]
+
+description = "Program which helps to find hyperparameters for a ResNet like ANN that classifies signal and noise particle collisions events simulated with Delphes"
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
+license = "GNU"
+license-files = ["LICEN[CS]E*", "LICENSE.md"]
+
+dependencies = [
+  "uproot == 5.7.1",
+  "pandas == 2.2.2",
+  "numpy == 1.26.2",
+  "matplotlib" == 3.8.4",
+  "seaborn == 0.13.2",
+  "optuna == 4.6.0",
+  "wandb == 0.22.3",
+  "opencv-python-headless == 4.9.0.80",
+  "keras == 2.15.0",
+  "tensorflow-gpu == 2.15.0",
+  "tensorflow == 2.15.0",
+  "scikit-learn == 1.7.2"
+]
+
+[project.urls]
+Homepage = "https://github.com/emmdaz/SINBA-ResNet.git"
