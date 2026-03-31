@@ -223,6 +223,71 @@ def objective(trial, X_train, X_val, y_train, y_val, activation_f = ["relu","rel
 
 Es necesario realizar unos pasos extras con Optuna para realizar los experimentos. En [SINBA-example](https://github.com/emmdaz/SINBA-example.git) muestro un ejemplo de cómo hacerlo.
 
+## Rendimiento
+
+En [SINBA-example](https://github.com/emmdaz/SINBA-example.git) se muestra un ejemplo de la implementación de la librería SINBA. En este apartado ha de mostrarse el rendimiento del programa. 
+
+El ejemplo hace uso de dos archivos .ROOT derivados de una simulación Delphes de colisiones de un protón y un antiprotón. El proceso genera un bosón Z y un bosón H (Higgs) que decaen a un par leptónico y un quark b/anti-b y s/anti-s. Al usar el progrma SINBA fue configurado para reconstruir la masa invariante del bosón de Higgs (a partir de sus decaimientos) y la masa invariante entre los pares leptónicos corresponde a los del bosón Z, por ello, la columna `DER_mass_lep` no fue removida. Fue entonces creada una base de datos como la siguiente:
+
+![alt text](image.png)
+
+El programa para crear los conjuntos de entrenamiento, validación y prueba fue configurado para generar estos tres conjuntos sin considerar balanceo de clase y dividiendo los datos en 50% entrenamiento, 30% validación y 20% prueba; teniendo pues un número de datos:
+
+- Train size: 1572
+- Validation size: 628
+- Test size: 944 
+
+Se realizó un experimento de Optuna en el que exploró 20 configuraciones para los hiperparámetros del modelo con la configuración predeterminada propuesta en `SINBA.objective()`. Luego de estos intentos Optuna encontró que los mejores hiperparámetros para una red residual eran:
+
+```
+{'Activation_Function': 'leaky_relu', 'Layer_Regularizer': 'l2', 'Regularizer_Value': 2.9030212081462723e-07, 'N_layers': 17, 'learning_rate': 0.0009406914712140204, 'optimizer': 'adamw', 'N_1st_layer': 233, 'Dropout': 'n', 'Regularizer': 'l2', 'Reg_value': 8.882681102034641e-07, 'N_1_layer': 194, 'N_2_layer': 193, 'N_3_layer': 155, 'N_4_layer': 229, 'N_5_layer': 145, 'N_6_layer': 248, 'N_7_layer': 189, 'N_8_layer': 189, 'N_9_layer': 162, 'N_10_layer': 198, 'N_11_layer': 184, 'N_12_layer': 172, 'N_13_layer': 247, 'N_14_layer': 219, 'N_15_layer': 239, 'N_16_layer': 218, 'N_17_layer': 146}
+```
+
+Se diseñó así, la red y fue obtenido al final un rendimiento como sigue:
+
+- loss: 0.0062
+- accuracy: 1.0000
+- precision: 1.0000
+- AUC: 1.0000
+- AUPRC: 1.0000
+
+Para los datos de prueba. 
+
+Las gráficas de pérdida durante el entrenamiento y la validación fueron las siguientes:
+
+![alt text](image-1.png)
+
+Las gráficas de exactitud durante el entrenamiento y la validación fueron las siguientes:
+
+![alt text](image-2.png)
+
+Las gráficas de precisión durante el entrenamiento y la validación fueron las siguientes:
+
+![alt text](image-3.png)
+
+Reportándose una matriz de confusión para los datos de validación como sigue:
+
+![alt text](image-4.png)
+
+## Consideraciones importantes
+
+SINBA fue desarrollado para implementarse usando el contenedor de docker `tensorflow-2.15.0-gpu`. Es sugerido enormemente sea implementado de la misma forma (pues así fue cómo fue hecho). 
+
+SINBA requiere otras librerías para su uso. Estas son:
+- `Uproot (5.7.1)`
+- `Pandas (2.2.2)`
+- `Numpy (1.26.2)`
+- `Matplotlib (3.8.4)`
+- `Seaborn (0.13.2)`
+- `Optuna (4.6.0)`
+- `WandB (0.22.3)`
+- `Opencv-Python-Headless (4.9.0.80)`
+- `Keras (2.15.0)`
+- `Tensorflow (2.15.0)`
+- `Scikit-learn (1.7.2)`
+
+Todo trabajando con `Python 3.11.0rc1`
+
 
 ## Bibliografía
 
