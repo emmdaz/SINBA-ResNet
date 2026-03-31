@@ -15,4 +15,15 @@ SINBA permite el cálculo de variables para el entrenamiento de una red neuronal
 Entre las configuraciones de los programas empleados hay anexada una opción para guardar los DataFrames
 creados para su funcionamiento. Esto ha sido diseñado de esta manera para permitir al usuario guardar las bases de datos en el futuro y permitir entonces crear, por ejemplo archivos .csv, que pudieran resultar más cómodos para trabajar con métodos similares o diferentes de aprendizaje de máquina.
 
-[1] Balazs Kegl, CecileGermain, ChallengeAdmin, ClaireAdam, David Rousseau, Djabbz, fradav, Glen Cowan, Isabelle, and joycenv. Higgs Boson Machine Learning Challenge. https://kaggle.com/competitions/higgs-boson, 2014. Kaggle.
+## Variables Calculator
+
+El primer módulo esencial para SINBA es variables_calculator. Este programa permite realizar el cálculo de
+cantidades importantes a utilizar para el entrenamiento de la red neuronal. Entre estas se encuentan la masa invariante, la masa transversa, la separación de la pseudo-velocidad, el momento transverso, entre otros.
+
+Las variables usadas para el entrenamiento se dividen esencialmente en dos tipos: Las primarias y las derivadas. Como su nombre indica, las primarias son las que se obtienen de la información en crudo del archivo ROOT, e.g. el número de jets en el evento; por su lado, las variables derivadas serán aquellas que se obtienen a partir de cálculos con las primarias. La variables primarias son etiquetadas en la base de datos o DataFrame crado con el prefijo PRI. Similarmente, las variables derivadas son etiquetadas con un prefijo DER.
+
+En las simulaciones Delphes puede permitirse el caso en el que en un evento hay más de una partícula de un tipo, e.g. que haya tres electrones, y en todo caso la elección de la variable será acorde a la correspondiente de la partícula que tenga el mayor valor de momento transverso[^1]. 
+
+[^1]: El programa está configurado actualmente para trabajar únicamente con partículas masivas. La implementación para fotones sigue en curso.
+
+[1]: Balazs Kegl, CecileGermain, ChallengeAdmin, ClaireAdam, David Rousseau, Djabbz, fradav, Glen Cowan, Isabelle, and joycenv. Higgs Boson Machine Learning Challenge. https://kaggle.com/competitions/higgs-boson, 2014. Kaggle.
