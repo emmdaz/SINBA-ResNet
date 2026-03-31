@@ -8,6 +8,24 @@ Cruz, D. Emmanuel $^{\dagger *}$
 
 La clasificación de señal y ruido de eventos de altas energías implica hasta la fecha un reto para la física experimental moderna. Múltiples métodos de aprendizaje de máquina para su diferenciación han sido empleados como lo son los árboles de decisión, los Random Forest o el clustering con un buen desempeño y son el estado del arte más empleado. En este trabajo se propone utilizar un diseño de red neuronal artificial para la clasificación de estos eventos. *_SINBA_* (SIgnal aNd BAckground) es un programa que ayuda a la búsqueda de hiperparámetros para una red neuronal tipo ResNet, que clasifica eventos señal y ruido de eventos de colisiones de partículas simuladas con Delphes. El programa permite elegir la búsqueda de eventos en los que una partícula haya decaído a pares de partículas y reconstruir su masa invariante para crear una base de datos basada en el _Higgs Boson Challenge_ con la que es entrenada la red . Se reporta un ejemplo en el que se entrenó una red para la diferenciación de eventos que produjeron un Higgs que decae a un par leptónico $\ell^+ / \ell^-$ y a un quark b/anti-b $b / \bar{b}$ y un quark anti_s/b $s / \bar{s}$.
 
+## Contenido
+
+[1. Introducción](#introducción).
+
+[2. Variables calculator](#variables-calculator).
+
+[3. DataSet Creator](#dataset-creator).
+
+[4. Residual Block](#residual-block).
+
+[5. Experiment](#experiment).
+
+[6. Rendimiento](#rendimiento).
+
+[7. Consideraciones importantes](#consideraciones-importantes).
+
+[8. Bibliografía](#bibliografía).
+
 ## Introducción
 
 El programa SINBA[^1] tiene como principal objeto facilitar el diseño de una red neuronal tipo ResNet para realizar la diferenciación de eventos señal y eventos ruido de colisiones de partículas. Su diseño está enfocado a trabajar con archivos .ROOT derivados de simulaciones Delphes. 
@@ -292,6 +310,17 @@ Todo trabajando con `Python 3.11.0rc1`
 ## Bibliografía
 
 [1]: Balazs Kegl, CecileGermain, ChallengeAdmin, ClaireAdam, David Rousseau, Djabbz, fradav, Glen Cowan, Isabelle, and joycenv. Higgs Boson Machine Learning Challenge. https://kaggle.com/competitions/higgs-boson, 2014. Kaggle.
+
+### Lista de tareas
+
+- [ ] Implementación para fotones :atom:
+- [ ] Añadir más variables para entrenar el modelo. :electron:
+- [ ] Explorar y corregir errores con Optuna y WandB. :open_file_folder:
+- [ ] Implementar más optimizadores. :chart_with_downwards_trend:
+
+> [!WARNING] :radioactive:
+
+> No se han explorado los errores con la primer versión de la librería SINBA. 
 
 [^1]: El diseño fue resultado de los experimentos que realizé en mi repositorio [Higgs-Boson-SignalnBackground-Classificator](https://github.com/emmdaz/Higgs-Boson-SignalnBackground-Classificator.git)
 
