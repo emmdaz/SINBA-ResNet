@@ -1,4 +1,4 @@
-# _SINBA ResNet_: User Guide
+# _SINBA ResNet [^1]_: User Guide
 Cruz, D. Emmanuel $^{\dagger *}$
 
 </small>$^\dagger$ Facultad de Ciencias Físico Matemáticas, Benemérita Universidad Autónoma de Puebla.</small>  
@@ -26,7 +26,7 @@ cantidades importantes a utilizar para el entrenamiento de la red neuronal. Entr
 
 Las variables usadas para el entrenamiento se dividen esencialmente en dos tipos: Las primarias y las derivadas. Como su nombre indica, las primarias son las que se obtienen de la información en crudo del archivo ROOT, e.g. el número de jets en el evento; por su lado, las variables derivadas serán aquellas que se obtienen a partir de cálculos con las primarias. La variables primarias son etiquetadas en la base de datos o DataFrame crado con el prefijo PRI. Similarmente, las variables derivadas son etiquetadas con un prefijo DER.
 
-En las simulaciones Delphes puede permitirse el caso en el que en un evento hay más de una partícula de un tipo, e.g. que haya tres electrones, y en todo caso la elección de la variable será acorde a la correspondiente de la partícula que tenga el mayor valor de momento transverso[^1]. 
+En las simulaciones Delphes puede permitirse el caso en el que en un evento hay más de una partícula de un tipo, e.g. que haya tres electrones, y en todo caso la elección de la variable será acorde a la correspondiente de la partícula que tenga el mayor valor de momento transverso[^2]. 
 
 Las variables posibles a calcularse usando este módulo son: 
 
@@ -108,8 +108,6 @@ def DER_prodeta_jet_jet(file, flavor1, flavor2, charge = 0, save_df = False)
 def DER_deltaeta_jet_jet(file, j1, j2, flavor1, flavor2, charge = 0, save_df = False)
 ```
 
-[^1]: El programa está configurado actualmente para trabajar únicamente con partículas masivas. La implementación para fotones sigue en curso.
-
 ## DataSet Creator
 
 El módulo data_set_creator permite la creación y el guardado de bases de datos para los eventos señal y ruido respectivamente. Así mismo, da posibilidad de crear directamente los conjuntos de entrenamiento, validación y prueba con los que se puede entrenar un modelo de red neuronal (o cualquier otro método de aprendizaje de máquina deseado que lo permita). En este programa también ha sido definida una función que permite observar la matriz de correlación entre las variables que conforman a un conjunto de datos creado con la función dataset() de este programa. 
@@ -190,3 +188,7 @@ def corr(df, cmap = "coolwarm", method = "pearson", fig_size = (20,20), droplabe
 ## Bibliografía
 
 [1]: Balazs Kegl, CecileGermain, ChallengeAdmin, ClaireAdam, David Rousseau, Djabbz, fradav, Glen Cowan, Isabelle, and joycenv. Higgs Boson Machine Learning Challenge. https://kaggle.com/competitions/higgs-boson, 2014. Kaggle.
+
+[^1]: El diseño fue resultado de los experimentos que realizé en mi repositorio [Higgs-Boson-SignalnBackground-Classificator](https://github.com/emmdaz/Higgs-Boson-SignalnBackground-Classificator.git)
+
+[^2]: El programa está configurado actualmente para trabajar únicamente con partículas masivas. La implementación para fotones sigue en curso.
