@@ -318,8 +318,7 @@ Todo trabajando con `Python 3.11.0rc1`
 - [ ] Explorar y corregir errores con Optuna y WandB. :open_file_folder:
 - [ ] Implementar más optimizadores. :chart_with_downwards_trend:
 
-> [!WARNING] :radioactive:
-
+> [!WARNING] 
 > No se han explorado los errores con la primer versión de la librería SINBA. 
 
 [^1]: El diseño fue resultado de los experimentos que realizé en mi repositorio [Higgs-Boson-SignalnBackground-Classificator](https://github.com/emmdaz/Higgs-Boson-SignalnBackground-Classificator.git)
