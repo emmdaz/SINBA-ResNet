@@ -185,6 +185,45 @@ def corr(df, cmap = "coolwarm", method = "pearson", fig_size = (20,20), droplabe
 - `method`. Método a utilizar para analizar la correlación entre las variables.
 - `droplabel = True`. Por defecto elimina la columna con la etiquita 0/1 del conjunto de datos.
 
+## Residual Block
+
+Módulo con una función que ayuda a crear el bloque residual utilizado en los experimentos con Optuna o el modelo final.
+
+Permite al usuario configurar las unidades del perceptrón por capa residual, la función de activación para todo el
+bloque residual, si se utiliza Dropout o no, la tasa de Dropout por capa (en caso afirmativo), elegir un regularizador de capa,
+y el valor del regularizador. Tiene valores asignados por defecto por si el usuario desea emplear esta función en otro programa.
+
+```
+def residual_block(x, perceptrons, activation, dropout_rate = 0.0, reg_value = 1.0e-3, regularizer = "l2")
+```
+
+## Experiment
+
+El módulo `experiment` permite al usuario realizar experimentos con Optuna y WandB para la búsqueda de hiperparámetros. Da la opción al usuario para qué eliga el caso que requiera. 
+
+En el programa se utiliza Optuna para que sugiera el número de capas, las unidades de neurona por capa, la función de activación en todas las capas (por defecto se elije entre relu, relu6 y leaky_relu, pero se pueden modificar), el valor de la taza de aprendizaje ($\eta$), qué regularizador ocupar (L1/L2) y su valor, si ocupar Dropout en las capas residuales y el valor del Dropout en cada capa, el optimizador (Se seleccionaron por defecto SGD, Adam, RMSprop y AdamW) y si usar balanceo de clase.
+
+- `objective()`. Para realizar experimentos sin seguimiento en Optuna.
+```
+def objective(trial, X_train, X_val, y_train, y_val, activation_f = ["relu","relu6","leaky_relu"],layers_interval = (15,20), units_interval = (128,256), regularizer_interval = (1e-7, 1e-5), opt = ["sgd", "adam", "rmsprop", "adamw"], eta_interval = (2.5e-4, 1e-3,), class_weight = {}, dropout_interval = (0.1, 0.15), custom_optimizer = False)
+```
+
+- `X_train`,`X_val`, `y_train`, `y_val` corresponden a los conjuntos de entrenamiento y validación del modelo. 
+- `activation_f`permite la elección de funciones de activación que optuna eligirá para ocuparse en todas las capas de cada modelo.
+- `layer_interval` permite la elección del intervalo de búsqueda de Optuna para el número de capas residuales.
+- `units_interval` permite la elección del intervalo de búsqueda de Optuna para el número de neuronas por capa.
+- `regularizer_interval` permite la elección del intervalo de búsqueda de Optuna para el valor del regularizador. 
+- `opt` permite que se elija un regularizador diferente a los propuestos por defecto. Es necesario que tenga a su vez `custom_optimizer = False` para su funcionamiento.
+- `eta_interval` permite la elección del intervalo de búsqueda de Optuna para el valor de la taza de aprendizaje.
+- `class_weight` {} para que no se ocupe balanceo de clase. Ocúpese el obtenido con el módulo `data_set_creator` y la función `model_sets(weight_classes = True)` para obtener el diccionario correspondiente. 
+- `dropout_interval`permite la elección del intervalo de búsqueda de Optuna para el porcentaje de dropout por capa.
+- `custom_optimizer` elíjase como `True`si se desea ocupar un optimizador diferente y que Optuna no explore este hiperparámetro. 
+
+- `objective_tracked()`. Permite realizar experimentos en Optuna y trackear el rendimiento de los experimentos usando la librería de WandB. Las variables son las mismas que en `objective()`.
+
+Es necesario realizar unos pasos extras con Optuna para realizar los experimentos. En [SINBA-example](https://github.com/emmdaz/SINBA-example.git) muestro un ejemplo de cómo hacerlo.
+
+
 ## Bibliografía
 
 [1]: Balazs Kegl, CecileGermain, ChallengeAdmin, ClaireAdam, David Rousseau, Djabbz, fradav, Glen Cowan, Isabelle, and joycenv. Higgs Boson Machine Learning Challenge. https://kaggle.com/competitions/higgs-boson, 2014. Kaggle.
