@@ -1971,7 +1971,7 @@ def trans_momentum(file, p1, p2, charge, flavor1 = 0, flavor2 = 0, save_df = Tru
 
     # Then we can calculate the transverse momentum
 
-    data["trans_momentum"] = np.sqrt(data["p1_x"]**2 + data["p1_y"]**2) 
+    data["PRI_pt"] = np.sqrt(data["p1_x"]**2 + data["p1_y"]**2) 
 
     # Create the corrected dataframe
     data = data.drop(columns = ["pt_1", "pt_2", "phi_1", "phi_2"])
