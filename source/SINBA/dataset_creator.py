@@ -1,4 +1,3 @@
-# DataSet Creator
 from . import variables_calculator
 import numpy as np
 import pandas as pd
@@ -6,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-def dataset(file, p1, p2, flavor1 = 0, flavor2 = 0, charge = 0, Signal = False, Noise = False, save_csv = False):
+def dataset(file, p1, p2, flavor1 = 0, flavor2 = 0, charge = 0, Signal = False, Noise = False, save_csv = False, name = "data.csv"):
     """
     Function which creates a dataframe (and if selected a .csv file)
     based on the one proposed in Balazs Kegl, CecileGermain, ChallengeAdmin, 
@@ -117,10 +116,13 @@ def dataset(file, p1, p2, flavor1 = 0, flavor2 = 0, charge = 0, Signal = False, 
 
     else:
         print("Error")
+        
+    if save_csv == True:
+        df.to_csv(name)
 
     return df
 
-def model_sets(signal_df, noise_df, test = False, weight_classes = False, train_per = 0.5, val_per = 0.5,
+def model_sets(signal_df, noise_df, test = False, weight_classes = True, train_per = 0.5, val_per = 0.5,
                test_per = 0., esc = 1., random_state = 45):
     """
     This program creates the sets which will be used to train a Signal and Noise ANN classificator model.
@@ -281,7 +283,3 @@ def corr(df, cmap = "coolwarm", method = "pearson", fig_size = (20,20), droplabe
         sns.heatmap(correlation_matrix, annot = True, cmap = cmap, fmt = ".2f")
         plt.title("Correlation Heatmap")
         plt.show()
-
-        
-
-
